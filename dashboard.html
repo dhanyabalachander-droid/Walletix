@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WALLETIX</title>
+<style>
+:root{--bg:#070912;--card:rgba(255,255,255,.055);--bd:rgba(255,255,255,.1);--tx:#eaeefc;--mu:#8b93b5;--a:#8b6cff;--b:#22d3ee;--g:#34d399;--r:#fb7185;--y:#fbbf24}
+*{box-sizing:border-box;margin:0}html,body{height:100%}
+body{background:var(--bg);color:var(--tx);font:15px/1.5 "Segoe UI",system-ui,sans-serif;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(60% 50% at 15% 10%,rgba(139,108,255,.25),transparent),radial-gradient(50% 45% at 90% 85%,rgba(34,211,238,.18),transparent);animation:amb 14s ease-in-out infinite alternate}
+@keyframes amb{to{filter:hue-rotate(35deg) brightness(1.15)}}
+#app{display:flex;min-height:100%}
+aside{width:230px;flex:none;padding:18px 12px;border-right:1px solid var(--bd);background:rgba(8,10,22,.7);backdrop-filter:blur(18px);position:sticky;top:0;height:100vh;overflow:auto}
+.logo{font-size:22px;font-weight:800;letter-spacing:.5px;padding:4px 10px 16px;background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;color:transparent}
+aside a{display:block;padding:9px 12px;border-radius:10px;color:var(--mu);cursor:pointer;transition:.2s;margin-bottom:2px}
+aside a:hover{background:var(--card);color:var(--tx)}aside a.on{background:linear-gradient(90deg,rgba(139,108,255,.3),rgba(34,211,238,.12));color:#fff;box-shadow:inset 2px 0 var(--a)}
+main{flex:1;min-width:0;padding:26px;max-width:1200px;margin:auto}
+h1{font-size:26px;margin-bottom:4px}h2{font-size:16px;margin-bottom:12px}.sub{color:var(--mu);margin-bottom:18px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+#menu{display:none}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;backdrop-filter:blur(14px);transition:.25s;animation:in .5s both}
+.card:hover{border-color:rgba(139,108,255,.5);box-shadow:0 0 28px rgba(139,108,255,.15)}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.big{font-size:28px;font-weight:700}.mu{color:var(--mu);font-size:13px}.pos{color:var(--g)}.neg{color:var(--r)}
+label{display:block;font-size:12px;color:var(--mu)}
+input,select,textarea{width:100%;margin-top:4px;padding:9px 11px;background:rgba(255,255,255,.06);border:1px solid var(--bd);border-radius:10px;color:var(--tx);font:inherit;outline:none}
+input:focus,select:focus{border-color:var(--a);box-shadow:0 0 0 3px rgba(139,108,255,.2)}
+input[type=checkbox]{width:auto}option{background:#12152a}
+.fg{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:12px}
+button{padding:9px 16px;border:0;border-radius:10px;background:linear-gradient(90deg,var(--a),#5b8cff);color:#fff;font:inherit;font-weight:600;cursor:pointer;transition:.2s}
+button:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(139,108,255,.4)}button.s{background:var(--card);border:1px solid var(--bd);padding:5px 10px;font-size:12px;font-weight:500}button.d{background:rgba(251,113,133,.18);color:var(--r)}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:560px}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--bd);font-size:14px}th{color:var(--mu);font-weight:500;font-size:12px}
+.pb{height:8px;background:rgba(255,255,255,.08);border-radius:9px;overflow:hidden;margin:6px 0}.pb i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--a),var(--b));animation:gw 1s both}
+@keyframes gw{from{width:0}}
+.pill{padding:2px 9px;border-radius:20px;font-size:12px;background:var(--card)}.Paid{color:var(--g)}.Overdue{color:var(--r)}.Due{color:var(--y)}
+.empty{text-align:center;color:var(--mu);padding:26px 10px}
+.hero{text-align:center;padding:9vh 10px}.hero h1{font-size:clamp(32px,6vw,56px);background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;color:transparent}
+.hero p{margin:12px 0 24px;color:var(--mu)}.hero button{font-size:17px;padding:13px 28px}
+.chart{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.chart svg{width:150px;flex:none}.leg div{font-size:13px;display:flex;align-items:center;gap:6px}.leg i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.bars{display:flex;align-items:flex-end;gap:14px;height:150px;overflow-x:auto;padding-top:8px}.bg2{display:flex;align-items:flex-end;gap:3px;height:120px}.bar{width:20px;border-radius:5px 5px 0 0;transform-origin:bottom;animation:gh .9s both}.bl{font-size:11px;color:var(--mu);text-align:center;margin-top:4px}
+@keyframes gh{from{transform:scaleY(0)}}
+#chat{height:340px;overflow:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:10px}.m{padding:9px 13px;border-radius:14px;max-width:85%;white-space:pre-wrap}.m.u{align-self:flex-end;background:linear-gradient(90deg,var(--a),#5b8cff)}.m.a{background:var(--card);border:1px solid var(--bd)}
+.row{display:flex;gap:8px}.row input{flex:1}
+#toast{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:9}#toast div{padding:11px 16px;border-radius:12px;background:#141833;border:1px solid var(--a);animation:in .3s}#toast .e{border-color:var(--r)}
+@media(max-width:800px){aside{position:fixed;z-index:8;left:-240px;transition:.3s;width:230px}aside.open{left:0}#menu{display:block}main{padding:16px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body><div class="bg"></div>
+<div id="app"><aside id="nav"></aside><main id="main"></main></div><div id="toast"></div>
+<script>
+const KEY='walletix_v1',$=id=>document.getElementById(id),g=id=>$(id).value,LN={en:0,ta:1,tg:2};
+let S={};try{S=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+S=Object.assign({profile:null,tx:[],bills:[],debts:[],goals:[],ef:{target:0,current:0,monthly:0},lang:'en',savePct:20,month:''},S);
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('Could not save: browser storage is unavailable.',1)}};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=v=>'₹'+Math.round(v).toLocaleString('en-IN'),sum=(a,f)=>a.reduce((s,x)=>s+(f?f(x):x),0);
+const today=()=>new Date().toISOString().slice(0,10);
+function toast(m,e){const d=document.createElement('div');d.textContent=m;if(e)d.className='e';$('toast').appendChild(d);setTimeout(()=>d.remove(),3500)}
+const D={
+nav:[['Dashboard','டாஷ்போர்டு','Dashboard'],['Financial Setup','நிதி அமைப்பு','Financial Setup'],['Budget Planner','பட்ஜெட்','Budget Planner'],['Transactions','பரிவர்த்தனைகள்','Transactions'],['Grocery Planner','மளிகை திட்டம்','Grocery Planner'],['Bills','கட்டணங்கள்','Bills'],['Savings','சேமிப்பு','Savings'],['Emergency Fund','அவசர நிதி','Emergency Fund'],['Debt & EMI','கடன் & EMI','Debt & EMI'],['Financial Goals','இலக்குகள்','Financial Goals'],['Spending Insights','செலவு நுண்ணறிவு','Spending Insights'],['AI Assistant','AI உதவியாளர்','AI Assistant'],['Settings','அமைப்புகள்','Settings']],
+wt:['Welcome to WALLETIX','WALLETIX-க்கு வரவேற்கிறோம்','WALLETIX-ku Welcome'],
+ws:["Let's understand your financial situation and create a personalized plan.",'உங்கள் நிதி நிலையை புரிந்து தனிப்பட்ட திட்டத்தை உருவாக்குவோம்.','Unga financial nilaimaiya purinjukittu personal plan create pannuvom.'],
+st:['Start Financial Setup','நிதி அமைப்பைத் தொடங்கு','Financial Setup Aarambikkalam'],
+need:['Add your income and expenses to calculate your savings potential.','சேமிப்பு திறனை கணக்கிட வருமானம் மற்றும் செலவுகளை சேர்க்கவும்.','Savings potential kanakkida income & expenses add pannunga.'],
+top:['Highest spending: {0} ({1}, {2}% of expenses).','அதிக செலவு: {0} ({1}, செலவில் {2}%).','Adhiga selavu: {0} ({1}, selavil {2}%).'],
+rise:['{0} spending rose {1}% versus last month.','{0} செலவு கடந்த மாதத்தை விட {1}% உயர்ந்தது.','{0} selavu kadantha madhathai vida {1}% adhigam.'],
+small:['{0} small purchases (under {1}) add up to {2}.','{1}-க்கு கீழ் {0} சிறு வாங்குதல்கள் மொத்தம் {2}.','{1}-ku keezh {0} sinna purchases motham {2}.'],
+ess:['Essentials are {0}% of spending, non-essentials {1}%.','அவசிய செலவு {0}%, அவசியமற்றவை {1}%.','Essential {0}%, non-essential {1}% selavu.'],
+noins:['Add more transactions to generate spending insights.','செலவு நுண்ணறிவுகளுக்கு மேலும் பரிவர்த்தனைகளை சேர்க்கவும்.','Insights kidaikka innum transactions add pannunga.'],
+a1:['This month: income {0}, expenses {1}, balance {2}.','இந்த மாதம்: வருமானம் {0}, செலவு {1}, மீதம் {2}.','Indha madham: income {0}, selavu {1}, meedhi {2}.'],
+a2:['Trimming {0} by 10% would free about {1} a month.','{0} செலவை 10% குறைத்தால் மாதம் சுமார் {1} மிச்சம்.','{0} selavai 10% kuraichaa maadham {1} micham.'],
+a3:['Debt outstanding {0}; EMIs {1}/month = {2}% of income.','நிலுவை கடன் {0}; EMI {1}/மாதம் = வருமானத்தில் {2}%.','Kadan {0}; EMI {1}/maadham = income-il {2}%.'],
+a4:['{0}: save {1}/month to reach it by {2}.','{0}: {2}-க்குள் அடைய மாதம் {1} சேமிக்கவும்.','{0}: {2}-kulla adaiya maadham {1} semikkanum.'],
+a5:['Unpaid bills: {0}, totalling {1}.','செலுத்தாத கட்டணங்கள்: {0}, மொத்தம் {1}.','Pay pannaadha bills: {0}, motham {1}.'],
+a6:['Ask me about saving, spending, bills, debt, goals or budget.','சேமிப்பு, செலவு, கட்டணம், கடன், இலக்கு, பட்ஜெட் பற்றி கேளுங்கள்.','Saving, selavu, bills, kadan, goals, budget pathi kelunga.'],
+a7:['Not enough data yet. Please add: {0}.','இன்னும் போதுமான தரவு இல்லை. சேர்க்கவும்: {0}.','Data pathaadhu. Add pannunga: {0}.']};
+const L=(k,...a)=>D[k][LN[S.lang]].replace(/\{(\d)\}/g,(_,i)=>a[i]);
+const ESS=new Set(['Rent','Groceries','Utilities','Transport','Education','Insurance','Health','EMI','Bills']);
+const CATS=['Salary','Business','Other Income','Rent','Groceries','Utilities','Transport','Education','Insurance','Health','EMI','Bills','Food Delivery','Shopping','Entertainment','Travel','Subscriptions','Personal','Other'];
+/* ---------- calculation engine (single source of derived values) ---------- */
+const C={
+month:()=>S.month||today().slice(0,7),
+txM:()=>S.tx.filter(x=>x.date.slice(0,7)===C.month()),
+exp:()=>C.txM().filter(x=>x.type==='expense'),
+totalIncome:()=>sum(C.txM().filter(x=>x.type==='income'),x=>x.amount),
+totalExpenses:()=>sum(C.exp(),x=>x.amount),
+balance:()=>C.totalIncome()-C.totalExpenses(),
+planIncome:()=>S.profile?S.profile.income+S.profile.other:0,
+fixed:()=>S.profile?sum(['rent','elec','net','mobile','edu','ins','transport'].map(k=>S.profile[k])):0,
+totalEmi:()=>sum(S.debts,d=>d.emi),debtTotal:()=>sum(S.debts,d=>d.out),
+categoryExpenses:(l=C.exp())=>l.reduce((o,x)=>(o[x.cat]=(o[x.cat]||0)+x.amount,o),{}),
+essential:()=>sum(C.exp().filter(x=>x.ess),x=>x.amount),
+nonEssential:()=>C.totalExpenses()-C.essential(),
+savings:()=>S.profile?S.profile.savings:0,
+savingsPotential:()=>Math.max(C.balance(),0),
+efProgress:()=>S.ef.target>0?Math.min(S.ef.current/S.ef.target*100,100):null,
+goalProgress(x){const rem=Math.max(x.target-x.cur,0),pct=x.target>0?Math.min(x.cur/x.target*100,100):0;let m=null,mo=null;
+ if(x.date){const t=new Date(x.date),n=new Date();mo=(t.getFullYear()-n.getFullYear())*12+t.getMonth()-n.getMonth();if(mo>0)m=rem/mo}return{rem,pct,m,mo}},
+billStatus(b){if(b.paid)return'Paid';const d=(new Date(b.due)-new Date(today()))/864e5;return d<0?'Overdue':d<=7?'Due Soon':'Upcoming'},
+budget(){const p=S.profile,inc=C.planIncome();if(!inc)return null;const ess=C.fixed()+p.grocery,emi=C.totalEmi(),sv=inc*S.savePct/100;
+ return{inc,ess,emi,sv,wants:inc-ess-emi-sv}},
+budgetUsage(){const b=C.budget();return b?{ess:b.ess>0?C.essential()/b.ess*100:null,wants:b.wants>0?C.nonEssential()/b.wants*100:null}:null},
+insights(){const e=C.exp(),out=[],tot=C.totalExpenses();if(e.length<3)return out;
+ const cc=Object.entries(C.categoryExpenses()).sort((a,b)=>b[1]-a[1]);out.push(L('top',cc[0][0],fmt(cc[0][1]),Math.round(cc[0][1]/tot*100)));
+ const [y,m]=C.month().split('-').map(Number),pm=new Date(y,m-2,1).toISOString().slice(0,7);
+ const prev=C.categoryExpenses(S.tx.filter(x=>x.type==='expense'&&x.date.slice(0,7)===pm));
+ cc.forEach(([k,v])=>{if(prev[k]>0&&v>prev[k]*1.2)out.push(L('rise',k,Math.round((v/prev[k]-1)*100)))});
+ const th=tot/e.length*.5,sm=e.filter(x=>x.amount<th);if(sm.length>=3)out.push(L('small',sm.length,fmt(th),fmt(sum(sm,x=>x.amount))));
+ const ep=Math.round(C.essential()/tot*100);out.push(L('ess',ep,100-ep));return out}
+};
+/* ---------- helpers ---------- */
+const F=(l,id,v='',t='number',x='')=>`<label>${l}<input id="${id}" type="${t}" value="${esc(v)}" ${x}></label>`;
+const pb=p=>`<div class="pb"><i style="width:${Math.max(0,Math.min(p,100))}%"></i></div>`;
+const cu=v=>`<b class="cu" data-v="${v}">${fmt(v)}</b>`;
+const em=m=>`<div class="empty">${m}</div>`;
+function num(id,lab,req,max){const s=g(id).trim();if(!s){if(req)throw Error(lab+' is required.');return 0}const v=Number(s);if(!isFinite(v)||v<0)throw Error(lab+' must be a positive number.');if(max&&v>max)throw Error(lab+' cannot exceed '+max+'.');return v}
+const run=f=>{try{f()}catch(e){toast(e.message,1)}};
+const COL=['#8b6cff','#22d3ee','#f472b6','#fbbf24','#34d399','#fb7185','#60a5fa','#a3e635'];
+function donut(o){const e=Object.entries(o).sort((a,b)=>b[1]-a[1]),t=sum(e,x=>x[1]);if(!t)return em('No data for this chart yet.');let a=0;
+ return`<div class="chart"><svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="15.9" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="6"/>${e.map(([k,v],i)=>{const p=v/t*100,s=`<circle cx="21" cy="21" r="15.9" fill="none" stroke="${COL[i%8]}" stroke-width="6" stroke-dasharray="${p} ${100-p}" stroke-dashoffset="${25-a}"/>`;a+=p;return s}).join('')}</svg><div class="leg">${e.map(([k,v],i)=>`<div><i style="background:${COL[i%8]}"></i>${esc(k)} ${fmt(v)}</div>`).join('')}</div></div>`}
+function bars(items){const mx=Math.max(...items.flatMap(i=>[i.a,i.b]),0);if(!mx)return em('No data for this chart yet.');
+ return`<div class="bars">${items.map(i=>`<div><div class="bg2"><div class="bar" title="${fmt(i.a)}" style="height:${i.a/mx*100}%;background:var(--g)"></div><div class="bar" title="${fmt(i.b)}" style="height:${i.b/mx*100}%;background:var(--r)"></div></div><div class="bl">${i.l}</div></div>`).join('')}</div><div class="mu">Green income · Red expense</div>`}
+function trend(){const ms=[...new Set(S.tx.map(x=>x.date.slice(0,7)))].sort().slice(-6);return bars(ms.map(m=>({l:m.slice(2),a:sum(S.tx.filter(x=>x.type==='income'&&x.date.startsWith(m)),x=>x.amount),b:sum(S.tx.filter(x=>x.type==='expense'&&x.date.startsWith(m)),x=>x.amount)})))}
+/* ---------- generic CRUD for bills / debts / goals ---------- */
+const DEF={
+bills:{t:'Bills',f:[['name','Bill name','text',1],['amount','Amount','number',1],['due','Due date','date',1],['cat','Category','text',0],['paid','Paid','checkbox',0]]},
+debts:{t:'Debt & EMI',f:[['name','Loan name','text',1],['orig','Original amount','number',1],['out','Outstanding amount','number',1],['emi','EMI per month','number',1],['due','EMI due day (1-31)','number',0],['rate','Interest % per year','number',0]]},
+goals:{t:'Financial Goals',f:[['name','Goal name','text',1],['target','Target amount','number',1],['cur','Current amount','number',0],['date','Target date','date',0]]}};
+const ROW={
+bills:b=>{const s=C.billStatus(b),c=s==='Due Soon'?'Due':s;return`<td>${esc(b.name)}<div class="mu">${esc(b.cat||'')}</div></td><td>${fmt(b.amount)}</td><td>${b.due}</td><td><span class="pill ${c}">${s}</span></td>`},
+debts:d=>`<td>${esc(d.name)}</td><td>${fmt(d.out)} <span class="mu">of ${fmt(d.orig)}</span>${pb(d.orig?100-d.out/d.orig*100:0)}</td><td>${fmt(d.emi)}</td><td class="mu">${d.rate?d.rate+'%':''} ${d.due?'· day '+d.due:''}</td>`,
+goals:x=>{const p=C.goalProgress(x);return`<td>${esc(x.name)}${pb(p.pct)}<div class="mu">${Math.round(p.pct)}% · ${fmt(x.cur)} of ${fmt(x.target)}</div></td><td>${fmt(p.rem)} left</td><td>${x.date||'No date'}</td><td>${p.m!=null?fmt(p.m)+'/month':p.mo!=null&&p.mo<=0&&p.rem>0?'<span class="neg">Date passed</span>':'—'}</td>`}};
+let editing={};
+function crud(k){const d=DEF[k],ed=S[k].find(x=>x.id===editing[k]);
+ const list=S[k];let sumHtml='';
+ if(k==='debts')sumHtml=`<div class="grid"><div class="card"><div class="mu">Total debt</div><div class="big">${cu(C.debtTotal())}</div></div><div class="card"><div class="mu">Total EMI / month</div><div class="big">${cu(C.totalEmi())}</div></div></div>`;
+ if(k==='bills'){const u=list.filter(b=>!b.paid);sumHtml=`<div class="grid"><div class="card"><div class="mu">Unpaid bills</div><div class="big">${cu(sum(u,b=>b.amount))}</div><div class="mu">${u.length} pending</div></div></div>`}
+ return`<h1>${d.t}</h1><p class="sub">Stored once and reused across your budget, dashboard and assistant.</p>${sumHtml}
+ <div class="card"><h2>${ed?'Edit':'Add'}</h2><div class="fg">${d.f.map(([key,l,t])=>t==='checkbox'?`<label>${l}<br><input id="${k}_${key}" type="checkbox" ${ed&&ed[key]?'checked':''}></label>`:F(l,k+'_'+key,ed?ed[key]??'':'',t,t==='number'?'min="0" step="any"':'')).join('')}</div><button onclick="saveItem('${k}')">${ed?'Save changes':'Add'}</button> ${ed?`<button class="s" onclick="editing.${k}=null;render()">Cancel</button>`:''}</div>
+ <div class="card" style="margin-top:14px">${list.length?`<div class="tw"><table><tbody>${list.map(x=>`<tr>${ROW[k](x)}<td style="white-space:nowrap">${k==='bills'?`<button class="s" onclick="togglePaid('${x.id}')">${x.paid?'Unpay':'Mark paid'}</button> `:''}${k==='goals'?`<button class="s" onclick="addToGoal('${x.id}')">+ Add</button> `:''}<button class="s" onclick="editing.${k}='${x.id}';render()">Edit</button> <button class="s d" onclick="delItem('${k}','${x.id}')">Delete</button></td></tr>`).join('')}</tbody></table></div>`:em(k==='goals'?'Create your first financial goal.':k==='bills'?'No bills yet. Add one above.':'No debts recorded.')}</div>`}
+function saveItem(k){run(()=>{const o={};DEF[k].f.forEach(([key,l,t,r])=>{o[key]=t==='number'?num(k+'_'+key,l,r):t==='checkbox'?$(k+'_'+key).checked:g(k+'_'+key).trim();if(t==='text'&&r&&!o[key])throw Error(l+' is required.');if(t==='date'&&r&&!o[key])throw Error(l+' is required.');if(t==='date'&&o[key]&&isNaN(new Date(o[key])))throw Error('Invalid date.')});
+ if(k==='goals'&&o.target<=0)throw Error('Target amount must be greater than 0.');if(k==='debts'){if(o.out>o.orig)throw Error('Outstanding cannot exceed the original amount.');if(o.rate>100)throw Error('Interest cannot exceed 100%.');if(o.due&&(o.due<1||o.due>31))throw Error('Due day must be 1 to 31.')}
+ if(k==='bills'&&o.amount<=0)throw Error('Amount must be greater than 0.');
+ if(S[k].some(x=>x.id!==editing[k]&&x.name.toLowerCase()===o.name.toLowerCase()&&(k!=='bills'||x.due===o.due)))throw Error('An entry with this name already exists.');
+ if(editing[k]){Object.assign(S[k].find(x=>x.id===editing[k]),o);editing[k]=null}else S[k].push({id:uid(),...o});save();render();toast('Saved.')})}
+const delItem=(k,id)=>{if(confirm('Delete this entry?')){S[k]=S[k].filter(x=>x.id!==id);save();render();toast('Deleted.')}};
+const togglePaid=id=>{const b=S.bills.find(x=>x.id===id);b.paid=!b.paid;save();render()};
+const addToGoal=id=>{const v=Number(prompt('Amount to add to this goal:'));if(!(v>0))return toast('Enter a positive amount.',1);S.goals.find(x=>x.id===id).cur+=v;save();render();toast('Goal updated.')};
+/* ---------- views ---------- */
+const V={};
+const welcome=()=>`<div class="hero"><h1>${L('wt')}</h1><p>${L('ws')}</p><button onclick="go(1)">${L('st')}</button></div>`;
+V.dash=()=>{if(!S.profile&&!S.tx.length)return welcome();const ex=C.totalExpenses(),ins=C.insights(),b=C.budget();
+ return`<div class="top"><div><h1>${D.nav[0][LN[S.lang]]}</h1><p class="sub" style="margin:0">${C.month()}</p></div><label>Month<input type="month" value="${C.month()}" onchange="S.month=this.value;save();render()"></label></div>
+ <div class="grid"><div class="card"><div class="mu">Total income</div><div class="big">${cu(C.totalIncome())}</div></div><div class="card"><div class="mu">Total expenses</div><div class="big">${cu(ex)}</div></div><div class="card"><div class="mu">Remaining balance</div><div class="big ${C.balance()<0?'neg':'pos'}">${cu(C.balance())}</div></div><div class="card"><div class="mu">Total savings</div><div class="big">${S.profile?cu(C.savings()):'—'}</div>${S.profile?'':'<div class="mu">Complete Financial Setup</div>'}</div></div>
+ <div class="grid"><div class="card"><h2>Budget overview</h2>${[['Essential expenses',C.essential()],['Non-essential expenses',C.nonEssential()],['Debt / EMI',C.totalEmi()],['Emergency fund contribution',S.ef.monthly],['Remaining',C.balance()]].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:5px 0"><span class="mu">${l}</span>${cu(v)}</div>`).join('')}</div>
+ <div class="card"><h2>Category spending</h2>${donut(C.categoryExpenses())}</div><div class="card"><h2>Income vs expense</h2>${bars([{l:C.month().slice(2),a:C.totalIncome(),b:ex}])}</div></div>
+ <div class="grid"><div class="card"><h2>Essential vs non-essential</h2>${donut(ex?{Essential:C.essential(),'Non-essential':C.nonEssential()}:{})}</div><div class="card"><h2>Monthly trend</h2>${trend()}</div><div class="card"><h2>Insights</h2>${ins.length?ins.slice(0,3).map(i=>`<p style="margin-bottom:8px">• ${i}</p>`).join(''):em(L('noins'))}</div></div>`};
+V.setup=()=>{const p=S.profile||{},v=k=>p[k]??'';const n=(id,l)=>F(l,'p_'+id,v(id),'number','min="0" step="any"');
+ return`<h1>${D.nav[1][LN[S.lang]]}</h1><p class="sub">Enter this once. Every section reads from it.</p>
+ <div class="card"><h2>Income</h2><div class="fg">${n('income','Monthly income')}${n('other','Other income (monthly)')}</div><h2>Family</h2><div class="fg">${n('members','Family members')}${n('children','Children')}${n('earners','Earning members')}${n('dependents','Dependents')}</div>
+ <h2>Fixed monthly expenses</h2><div class="fg">${n('rent','Rent')}${n('elec','Electricity')}${n('net','Internet')}${n('mobile','Mobile')}${n('edu','Education')}${n('ins','Insurance')}${n('transport','Transportation')}</div>
+ <h2>Lifestyle & savings</h2><div class="fg"><label>Food habit<select id="p_food">${['mixed','veg','non-veg'].map(o=>`<option ${v('food')===o?'selected':''}>${o}</option>`).join('')}</select></label>${n('grocery','Monthly grocery budget')}${n('savings','Existing savings')}</div>
+ <p class="mu" style="margin-bottom:12px">Loans and EMIs go in Debt & EMI; goals in Financial Goals.</p><button onclick="saveProfile()">Save setup</button></div>`};
+function saveProfile(){run(()=>{const o={};['income','other','members','children','earners','dependents','rent','elec','net','mobile','edu','ins','transport','grocery','savings'].forEach(k=>o[k]=num('p_'+k,k==='income'?'Monthly income':'Value ('+k+')',k==='income'));
+ if(o.income<=0)throw Error('Monthly income must be greater than 0.');if(o.children>o.members)throw Error('Children cannot exceed family members.');if(o.earners>o.members)throw Error('Earning members cannot exceed family members.');
+ o.food=g('p_food');S.profile=o;save();toast('Setup saved. Your plan is ready.');go(2)})}
+V.budget=()=>{const b=C.budget();if(!b)return`<h1>${D.nav[2][LN[S.lang]]}</h1>${em('Add your income to start your financial plan.')}`;const u=C.budgetUsage();
+ const rows=[['Essentials (fixed + groceries)',b.ess],['Debt / EMI',b.emi],['Savings target',b.sv],['Discretionary',b.wants]],gm=sum(S.goals.map(x=>C.goalProgress(x).m||0));
+ return`<h1>${D.nav[2][LN[S.lang]]}</h1><p class="sub">A suggested plan from your income, family, commitments and savings target. Adjust it, it is a recommendation.</p>
+ <div class="card"><label>Savings target: <b>${S.savePct}%</b> of income (${fmt(b.sv)})<input type="range" min="0" max="60" value="${S.savePct}" oninput="S.savePct=+this.value;save();render()"></label></div>
+ <div class="grid" style="margin-top:14px">${rows.map(([l,v])=>`<div class="card"><div class="mu">${l}</div><div class="big ${v<0?'neg':''}">${cu(v)}</div>${pb(b.inc?v/b.inc*100:0)}<div class="mu">${b.inc?Math.round(v/b.inc*100):0}% of income</div></div>`).join('')}</div>
+ ${b.wants<0?'<div class="card neg">Your commitments and savings target exceed your income. Lower the savings target or review fixed costs.</div>':''}
+ <div class="grid"><div class="card"><h2>Actual usage this month</h2><div class="mu">Essentials vs plan</div>${u.ess!=null?pb(u.ess)+Math.round(u.ess)+'%':'—'}<div class="mu" style="margin-top:10px">Discretionary vs plan</div>${u.wants!=null?pb(u.wants)+Math.round(u.wants)+'%':'No discretionary budget'}</div>
+ <div class="card"><h2>Related commitments</h2><p class="mu">Emergency fund contribution: ${fmt(S.ef.monthly)}/month</p><p class="mu">Goals need: ${gm?fmt(gm)+'/month':'no dated goals'}</p><p class="mu">Family of ${S.profile.members||'—'} · ${b.inc?'per-person income '+fmt(b.inc/Math.max(S.profile.members,1)):''}</p></div></div>`};
+let flt={q:'',cat:'',type:'',from:'',to:'',sort:'date-d'};
+V.tx=()=>{let l=S.tx.filter(x=>(!flt.q||x.desc.toLowerCase().includes(flt.q.toLowerCase()))&&(!flt.cat||x.cat===flt.cat)&&(!flt.type||x.type===flt.type)&&(!flt.from||x.date>=flt.from)&&(!flt.to||x.date<=flt.to));
+ const [k,d]=flt.sort.split('-');l.sort((a,b)=>(k==='date'?a.date.localeCompare(b.date):a.amount-b.amount)*(d==='d'?-1:1));const e=S.tx.find(x=>x.id===editing.tx),cats=[...new Set([...CATS,...S.tx.map(x=>x.cat)])];
+ return`<h1>${D.nav[3][LN[S.lang]]}</h1><p class="sub">One transaction is one record. Classification comes from the record itself.</p>
+ <div class="card"><h2>${e?'Edit transaction':'Add transaction'}</h2><div class="fg">${F('Description','t_desc',e?.desc,'text')}${F('Amount','t_amt',e?.amount,'number','min="0" step="any"')}
+ <label>Type<select id="t_type"><option value="expense" ${e?.type==='expense'?'selected':''}>Expense</option><option value="income" ${e?.type==='income'?'selected':''}>Income</option></select></label>
+ <label>Category<input id="t_cat" list="cl" value="${esc(e?.cat||'')}" oninput="$('t_ess').checked=ESS.has(this.value)"><datalist id="cl">${cats.map(c=>`<option>${esc(c)}</option>`).join('')}</datalist></label>${F('Date','t_date',e?.date||today(),'date')}
+ <label>Essential<br><input id="t_ess" type="checkbox" ${e?.ess?'checked':''}></label></div><button onclick="saveTx()">${e?'Save changes':'Add transaction'}</button> ${e?'<button class="s" onclick="editing.tx=null;render()">Cancel</button>':''}</div>
+ <div class="card" style="margin-top:14px"><div class="fg"><label>Search<input value="${esc(flt.q)}" oninput="flt.q=this.value;filt()"></label><label>Category<select onchange="flt.cat=this.value;render()"><option value="">All</option>${cats.map(c=>`<option ${flt.cat===c?'selected':''}>${esc(c)}</option>`).join('')}</select></label>
+ <label>Type<select onchange="flt.type=this.value;render()"><option value="">All</option><option ${flt.type==='income'?'selected':''}>income</option><option ${flt.type==='expense'?'selected':''}>expense</option></select></label>${F('From','f_from',flt.from,'date','onchange="flt.from=this.value;render()"')}${F('To','f_to',flt.to,'date','onchange="flt.to=this.value;render()"')}
+ <label>Sort<select onchange="flt.sort=this.value;render()">${[['date-d','Newest'],['date-a','Oldest'],['amt-d','Highest'],['amt-a','Lowest']].map(([v,t])=>`<option value="${v.replace('amt','amount')}" ${flt.sort===v.replace('amt','amount')?'selected':''}>${t}</option>`).join('')}</select></label></div>
+ <div id="txl">${txTable(l)}</div></div>`};
+const txTable=l=>l.length?`<div class="tw"><table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th></th></tr></thead><tbody>${l.map(x=>`<tr><td>${x.date}</td><td>${esc(x.desc)}</td><td>${esc(x.cat)} ${x.type==='expense'?`<span class="mu">${x.ess?'essential':'non-essential'}</span>`:''}</td><td class="${x.type==='income'?'pos':'neg'}">${x.type==='income'?'+':'-'}${fmt(x.amount)}</td><td style="white-space:nowrap"><button class="s" onclick="editing.tx='${x.id}';render();scrollTo(0,0)">Edit</button> <button class="s d" onclick="delTx('${x.id}')">Delete</button></td></tr>`).join('')}</tbody></table></div>`:em(S.tx.length?'No transactions match your filters.':'No transactions yet.');
+function filt(){const l=S.tx.filter(x=>(!flt.q||x.desc.toLowerCase().includes(flt.q.toLowerCase()))&&(!flt.cat||x.cat===flt.cat)&&(!flt.type||x.type===flt.type));$('txl').innerHTML=txTable(l)}
+function saveTx(){run(()=>{const desc=g('t_desc').trim(),cat=g('t_cat').trim(),date=g('t_date'),type=g('t_type'),amount=num('t_amt','Amount',1);
+ if(!desc)throw Error('Description is required.');if(!cat)throw Error('Category is required.');if(amount<=0)throw Error('Amount must be greater than 0.');if(!date||isNaN(new Date(date)))throw Error('Enter a valid date.');
+ if(S.tx.some(x=>x.id!==editing.tx&&x.desc===desc&&x.amount===amount&&x.date===date&&x.type===type))throw Error('This looks like a duplicate of an existing transaction.');
+ const o={desc,amount,type,cat,date,ess:type==='expense'&&$('t_ess').checked};if(editing.tx){Object.assign(S.tx.find(x=>x.id===editing.tx),o);editing.tx=null}else S.tx.push({id:uid(),...o});
+ S.month=date.slice(0,7);save();render();toast('Transaction saved.')})}
+const delTx=id=>{if(confirm('Delete this transaction?')){S.tx=S.tx.filter(x=>x.id!==id);save();render();toast('Deleted.')}};
+V.grocery=()=>{const p=S.profile,h=`<h1>${D.nav[4][LN[S.lang]]}</h1>`;if(!p||!p.grocery)return h+em('Set your grocery budget to generate a grocery plan.');
+ const W={veg:{'Grains & pulses':.32,'Vegetables':.25,'Fruits':.13,'Dairy':.18,'Oil & spices':.12},'non-veg':{'Grains & pulses':.22,'Vegetables':.16,'Fruits':.08,'Dairy':.1,'Meat, fish & eggs':.32,'Oil & spices':.12},mixed:{'Grains & pulses':.26,'Vegetables':.2,'Fruits':.1,'Dairy':.14,'Meat, fish & eggs':.18,'Oil & spices':.12}}[p.food];
+ const m=Math.max(p.members,1),spent=sum(C.exp().filter(x=>x.cat==='Groceries'),x=>x.amount);
+ return h+`<p class="sub">Based on your budget, ${m} member(s) and ${p.food} food habit. Change them in Financial Setup.</p><div class="grid"><div class="card"><div class="mu">Budget</div><div class="big">${cu(p.grocery)}</div></div><div class="card"><div class="mu">Per person / day</div><div class="big">${cu(p.grocery/m/30)}</div></div><div class="card"><div class="mu">Spent on Groceries this month</div><div class="big">${cu(spent)}</div>${pb(spent/p.grocery*100)}</div></div>
+ <div class="card"><h2>Suggested split</h2>${Object.entries(W).map(([k,w])=>`<div style="display:flex;justify-content:space-between"><span>${k}</span><b>${fmt(p.grocery*w)}</b></div>${pb(w*100)}`).join('')}<p class="mu">The split is a recommendation and changes with your food habit.</p></div>`};
+V.savings=()=>{const inc=C.totalIncome(),ex=C.totalExpenses(),h=`<h1>${D.nav[6][LN[S.lang]]}</h1>`;if(!inc&&!ex)return h+em(L('need'));const b=C.budget();
+ return h+`<div class="grid"><div class="card"><div class="mu">Available this month (income − expenses)</div><div class="big ${C.balance()<0?'neg':'pos'}">${cu(C.balance())}</div></div><div class="card"><div class="mu">Savings rate</div><div class="big">${inc?Math.round(C.balance()/inc*100)+'%':'—'}</div></div><div class="card"><div class="mu">Existing savings</div><div class="big">${S.profile?cu(C.savings()):'—'}</div></div>${b?`<div class="card"><div class="mu">Target from budget</div><div class="big">${cu(b.sv)}</div>${pb(b.sv?C.savingsPotential()/b.sv*100:0)}</div>`:''}</div>`};
+V.ef=()=>{const p=C.efProgress();return`<h1>${D.nav[7][LN[S.lang]]}</h1><div class="card"><div class="fg">${F('Target amount','e_t',S.ef.target||'','number','min="0" step="any"')}${F('Current emergency savings','e_c',S.ef.current||'','number','min="0" step="any"')}${F('Monthly contribution','e_m',S.ef.monthly||'','number','min="0" step="any"')}</div><button onclick="saveEf()">Save</button></div>
+ <div class="card" style="margin-top:14px">${p==null?em('Set a target to see your progress.'):`<div class="big">${Math.round(p)}%</div>${pb(p)}<p class="mu">${fmt(Math.max(S.ef.target-S.ef.current,0))} to go${S.ef.monthly>0&&S.ef.current<S.ef.target?' · about '+Math.ceil((S.ef.target-S.ef.current)/S.ef.monthly)+' months at '+fmt(S.ef.monthly)+'/month':''}</p>`}</div>`};
+function saveEf(){run(()=>{S.ef={target:num('e_t','Target'),current:num('e_c','Current savings'),monthly:num('e_m','Monthly contribution')};save();render();toast('Saved.')})}
+V.insights=()=>{const i=C.insights();return`<h1>${D.nav[10][LN[S.lang]]}</h1><div class="card">${i.length?i.map(x=>`<p style="margin-bottom:10px">• ${x}</p>`).join(''):em(L('noins'))}</div><div class="grid" style="margin-top:14px"><div class="card"><h2>Category spending</h2>${donut(C.categoryExpenses())}</div><div class="card"><h2>Monthly trend</h2>${trend()}</div></div>`};
+V.ai=()=>`<h1>${D.nav[11][LN[S.lang]]}</h1><p class="sub">Answers come from your own data.</p><div class="card"><div id="chat"><div class="m a">${L('a6')}</div></div><div class="row"><input id="q" placeholder="How can I save more?" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div></div>`;
+function reply(q){q=q.toLowerCase();const inc=C.totalIncome(),ex=C.totalExpenses(),cc=Object.entries(C.categoryExpenses()).sort((a,b)=>b[1]-a[1]),o=[],has=w=>w.some(k=>q.includes(k));
+ if(has(['save','saving','semi','sema','சேமி','more']) ){if(!inc&&!ex)return L('a7','income, expenses');o.push(L('a1',fmt(inc),fmt(ex),fmt(C.balance())));if(cc.length)o.push(L('a2',cc[0][0],fmt(cc[0][1]*.1)));const b=C.budget();if(b)o.push('Target: '+fmt(b.sv)+'/month.')}
+ else if(has(['spend','selavu','expense','செலவு','where'])){if(!ex)return L('a7','expenses');o.push(L('a1',fmt(inc),fmt(ex),fmt(C.balance())),...C.insights())}
+ else if(has(['debt','emi','loan','kadan','கடன்'])){if(!S.debts.length)return L('a7','loans in Debt & EMI');const pi=C.planIncome()||inc;o.push(L('a3',fmt(C.debtTotal()),fmt(C.totalEmi()),pi?Math.round(C.totalEmi()/pi*100):'—'))}
+ else if(has(['goal','target','ilakku','இலக்கு'])){if(!S.goals.length)return L('a7','a goal');S.goals.forEach(x=>{const p=C.goalProgress(x);if(p.m!=null)o.push(L('a4',x.name,fmt(p.m),x.date));else o.push(x.name+': '+Math.round(p.pct)+'% ('+fmt(p.rem)+' left).')})}
+ else if(has(['bill','due','கட்டண'])){const u=S.bills.filter(b=>!b.paid);if(!S.bills.length)return L('a7','bills');o.push(L('a5',u.map(b=>b.name).join(', ')||'none',fmt(sum(u,b=>b.amount))))}
+ else if(has(['budget','plan'])){const b=C.budget();if(!b)return L('a7','monthly income in Financial Setup');o.push(`${fmt(b.inc)} → essentials ${fmt(b.ess)}, EMI ${fmt(b.emi)}, savings ${fmt(b.sv)}, discretionary ${fmt(b.wants)}.`)}
+ else return L('a6');return o.join('\n')}
+function ask(){const q=g('q').trim();if(!q)return;const c=$('chat');c.insertAdjacentHTML('beforeend',`<div class="m u">${esc(q)}</div>`);$('q').value='';const m=document.createElement('div');m.className='m a';c.appendChild(m);const t=reply(q);let i=0;const iv=setInterval(()=>{m.textContent=t.slice(0,i+=3);c.scrollTop=c.scrollHeight;if(i>=t.length)clearInterval(iv)},14)}
+V.settings=()=>`<h1>${D.nav[12][LN[S.lang]]}</h1><div class="card"><div class="fg"><label>Language<select onchange="S.lang=this.value;save();render()"><option value="en" ${S.lang==='en'?'selected':''}>English</option><option value="ta" ${S.lang==='ta'?'selected':''}>தமிழ் (Tamil)</option><option value="tg" ${S.lang==='tg'?'selected':''}>Tanglish</option></select></label></div>
+ <button onclick="exportData()">Export backup</button> <label style="display:inline-block;margin-left:8px">Import backup<input type="file" accept=".json" onchange="importData(this)"></label> <button class="d" onclick="resetAll()">Erase all data</button></div>`;
+function exportData(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='walletix-backup.json';a.click()}
+function importData(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>run(()=>{let d;try{d=JSON.parse(r.result)}catch(e){throw Error('That file is not a valid backup.')}if(!Array.isArray(d.tx))throw Error('That file is not a WALLETIX backup.');S=Object.assign(S,d);save();render();toast('Backup imported.')});r.readAsText(f)}
+function resetAll(){if(confirm('Erase all WALLETIX data? This cannot be undone.')){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}}
+/* ---------- shell ---------- */
+const ORDER=['dash','setup','budget','tx','grocery','bills','savings','ef','debts','goals','insights','ai','settings'];let cur=0;
+V.bills=()=>crud('bills');V.debts=()=>crud('debts');V.goals=()=>crud('goals');
+function go(i){cur=i;render();$('nav').classList.remove('open');scrollTo(0,0)}
+function render(){$('nav').innerHTML=`<div class="logo">WALLETIX</div>`+D.nav.map((n,i)=>`<a class="${i===cur?'on':''}" onclick="go(${i})">${n[LN[S.lang]]}</a>`).join('');
+ $('main').innerHTML=`<button id="menu" class="s" style="margin-bottom:12px" onclick="$('nav').classList.toggle('open')">☰ Menu</button>`+V[ORDER[cur]]();
+ document.querySelectorAll('.cu').forEach(e=>{const v=+e.dataset.v,t0=performance.now();(function s(t){const p=Math.min((t-t0)/700,1);e.textContent=fmt(v*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(s)})(t0)})}
+window.addEventListener('error',e=>toast('Something went wrong: '+e.message,1));
+render();
+</script></body></html>
